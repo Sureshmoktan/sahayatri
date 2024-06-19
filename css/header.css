@@ -1,0 +1,46 @@
+.navbar{
+    height: 120px;
+    width: 100%;
+    background-color: #6AB187;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top:0;
+    z-index: 10;
+}
+.logo{
+    border-radius: 50px;
+    margin-top: 7px;
+    margin-left: 30px;
+    
+}
+ul{
+    display:flex ;
+    justify-content: space-evenly;
+   
+}
+li{
+    list-style-type: none;
+    padding: 22px;
+    margin: 21px;
+   
+}
+li a{
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 30px;
+    color:black;
+    
+}
+li a:hover{
+    color: #066D65;
+    
+}
+.navbar h1{
+    color:white;
+}
+.active{
+  
+    color:#066D65;
+    
+}

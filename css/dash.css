@@ -1,0 +1,104 @@
+*{
+  padding: 0;
+
+  margin: 0;
+  overflow: hidden;
+}
+
+
+.dash{
+  background-color: whitesmoke;
+  width: 100%;
+  height: 100vh;
+  
+}
+
+.header{
+  background-color: aquamarine;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo{
+  background-image: url(../img/logo.png);
+  width: 110px;
+  height: 110px;
+  background-position: center;
+  border-radius: 50px;
+  background-size: cover;
+  background-color: yellow;
+  margin: 20px;
+  
+}
+
+.logout{
+  font-size: 40px;
+  margin: 20px ;
+  color: black;
+}
+
+.side{
+  width: 250px;
+  height: 625px;
+  background-color: lightgreen;
+}
+
+.sidei{
+  font-size: 50px;
+  padding: 90px;
+  
+}
+.sidei:hover{
+  color: green;
+}
+
+.sideuser{
+  font-size: 50px;
+  padding: 90px;
+  color: green;
+  
+}
+
+
+
+.user{
+  height:625px;
+  width: 1500px ;
+  margin: 50px;
+  
+}
+
+.content{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  width: 900px;
+  border: 2ps solid black;
+  
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+.delete{
+  background-color: lightcoral;
+  border: none;
+  color: #ddd;
+
+}
+.delete:hover{
+  background-color: red;
+}

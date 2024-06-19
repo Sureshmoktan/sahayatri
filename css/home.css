@@ -1,0 +1,243 @@
+body{
+   overflow-x: hidden;
+   background-color: aliceblue;
+
+}
+
+.home{
+    background-color: aqua;
+    width: 100%;
+    height: 84vh;
+}
+/* map css */
+
+.coordinate {
+   position: absolute;
+   bottom: 10px;
+   right: 50%;
+}
+#map{
+   height: 84vh;
+   width: 100%;
+
+}
+
+.leaflet-popup-content-wrapper {
+   background-color: #000000;
+   color: #fff;
+   border: 1px solid red;
+   border-radius: 0px;
+}
+.search{
+   background-color:#066D65 ;
+   width: 100%;
+   height: 50px;
+   display: flex;
+   justify-content: space-between;
+   margin-top: 120px;
+}
+.search-box{
+   width: 800px;
+   height: 37px; 
+   background-color: white;
+   border-radius: 10px;
+   margin-top: 6px;
+   margin-left: 30px;
+   border: none;
+   display: flex;
+   justify-content: space-between;
+
+}
+.search-in{
+   width: 730px;
+   height: 30px; 
+   border-radius: 10px;
+   margin-top: 6px;
+   margin-left: 30px;
+   border: none;
+}
+
+.log-in{
+   
+   font-size: 25px;
+   word-spacing: 20px;
+   color: aliceblue;
+   margin-top: 10px;
+   margin-right: 80px;
+   display: flex;
+   
+  
+}
+.log-in .auth-link{
+   list-style-type: none;
+   text-decoration: none;
+   color: aliceblue;
+   background: none;
+   border: navajowhite;
+   font-size: 19px;
+   /* font-weight: initial; */
+
+}
+.log-in .auth-link:hover{
+   color: lightgreen;
+  
+}
+
+
+
+
+/* about css */
+
+.about{
+    width: 100%;
+    height: auto;
+    display: flex;
+    background-color: aliceblue;
+
+    justify-content: space-between;
+}
+.about-text{
+   font-size: 30px;
+   margin-top: -50px;
+  
+}
+ .about-content{
+    width: 60%;
+    height: auto;
+    font-size: 30px;
+    padding-top: 60px;
+    padding-left: 25px;
+ }
+
+ .about-pic{
+    width: 38%;
+    height: 90vh;
+ }
+
+ .about-pic-one{
+    
+    height: 400px ;
+    width: 400px;
+    margin-top: 80px;
+    margin-left: 80px;
+    background-image: url(../img/car.jpg);
+    background-size: cover;
+    border-radius: 20px;
+    
+ }
+
+ .about-pic-two{
+  
+    height: 400px ;
+    width: 400px;
+    margin-top: 200px;
+    margin-left: 80px;
+    background-image: url(../img/bike.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    
+ }
+
+
+
+ /* contact css */
+
+ .contact{
+   
+   width: 100%;
+   height: auto;
+   margin-top: 40px;
+   padding-top: 30px;
+   padding-bottom: 50px;
+   background-color: aliceblue;
+
+ }
+ .contact-text{
+   font-size: 30px;
+   margin-right: 20px;
+ }
+ h4{
+   padding: 40px;
+ }
+
+ p{
+   font-size:  50px;;
+   padding: 30px;
+ }
+ .contact,h1,h2{
+   padding: 20px;
+ }
+
+ .container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 20px;
+   padding-top: 40px;
+   margin: 20px;
+  
+ }
+
+.card {
+   width: 400px;
+   height: 300px;
+   background-color: #fff;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   padding: 20px;
+   box-sizing: border-box;
+   background-color: #D0FFBC;
+   
+}
+.card,p{
+   font-size: 16px;
+}
+.card:hover {
+   transform: translateY(-10px);
+}
+
+
+/* gallery css */
+
+.gallery{
+   width: 100%;
+   height: auto;
+   padding-bottom: 40px;
+   background-color: aliceblue;
+
+}
+ .gallery,h3{
+   padding: 30px;
+ }
+ .gallery-text{
+   font-size: 30px;
+   margin-right: 20px;
+ }
+ 
+.card-gallery {
+   width: 400px;
+   height: 300px;
+   background-color: #fff;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   padding: 20px;
+   box-sizing: border-box;
+   margin-right: 10px;
+   background-size: cover;
+   border: 1px solid black;
+
+   
+}
+h2{
+font-size: 30px;
+}
+
+.card-gallery:hover {
+   transform: translateY(-10px);
+}
+
+
+/* f.foooter */
+
+ 
