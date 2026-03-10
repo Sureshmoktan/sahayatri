@@ -1,61 +1,21 @@
-import express from "express"
-import dotenv from "dotenv"
-import cors from "cors"
-import mongoose from "mongoose"
-import authRoutes from "./routes/authRoutes.js"
-import workshopRoutes from "./routes/workshopRoutes.js"
-import adminRoutes from "./routes/adminRoutes.js"
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import authRoutes from "./routes/authRoutes.js";
+import workshopRoutes from "./routes/workshopRoutes.js";
 
-dotenv.config()
+dotenv.config();
 
-// -------------------------
-// Connect to MongoDB
-// -------------------------
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI)
-    console.log(`MongoDB Connected ✅: ${conn.connection.host}`)
-  } catch (error) {
-    console.error(`MongoDB Connection Error ❌: ${error.message}`)
-    process.exit(1) // Exit process with failure
-  }
-}
+const app = express();
 
-connectDB()
+app.use(express.json());
 
-// -------------------------
-// Express app setup
-// -------------------------
-const app = express()
-app.use(
-  cors({
-    origin: "http://localhost:5173", // your React app URL
-    credentials: true,               // allow cookies / auth headers
-  })
-)
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>console.log("MongoDB Connected"));
 
-app.use(express.json())
+app.use("/api", authRoutes);
+app.use("/api", workshopRoutes);
 
-// -------------------------
-// Routes
-// -------------------------
-app.use("/api/auth", authRoutes)
-app.use("/api/workshops", workshopRoutes)
-app.use("/api/admin", adminRoutes)
-
-// -------------------------
-// Test DB connection route
-// -------------------------
-app.get("/test-db", async (req, res) => {
-  try {
-    res.json({ message: "Backend connected to MongoDB!" })
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-// -------------------------
-// Start server
-// -------------------------
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
+});

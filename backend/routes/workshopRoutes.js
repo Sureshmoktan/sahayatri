@@ -1,11 +1,24 @@
-import express from "express"
-import { addWorkshop, getWorkshops, deleteWorkshop } from "../controllers/workshopController.js"
-import { protect, admin } from "../middleware/authMiddleware.js"
+import express from "express";
+import {
+  createWorkshop,
+  getWorkshops,
+  getWorkshopById,
+  updateWorkshop,
+  deleteWorkshop
+} from "../controllers/workshopController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/", getWorkshops)
-router.post("/", protect, addWorkshop)
-router.delete("/:id", protect, admin, deleteWorkshop) // Only admin can delete
 
-export default router
+router.post("/workshop", createWorkshop);
+
+router.get("/workshop", getWorkshops);
+
+router.get("/workshop/:id", getWorkshopById);
+
+router.put("/workshop/:id", updateWorkshop);
+
+router.delete("/workshop/:id", deleteWorkshop);
+
+
+export default router;

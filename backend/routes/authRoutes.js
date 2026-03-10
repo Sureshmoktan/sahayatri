@@ -1,9 +1,14 @@
-import express from "express"
-import { register, login } from "../controllers/authControllers.js"
+import express from "express";
+import { sendOtpMiddleware } from "../middleware/email.config.js";
+import { signup, verifyOtp, login } from "../controllers/authControllers.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/register", register)
-router.post("/login", login)
 
-export default router
+router.post("/auth/signup", sendOtpMiddleware, signup);
+
+router.post("/auth/verify-otp", verifyOtp);
+
+router.post("/auth/login", login);
+
+export default router;

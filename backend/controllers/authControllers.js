@@ -1,98 +1,97 @@
-// import Owner from "../models/Owner.js"
-// import Admin from "../models/Admin.js"
-// import bcrypt from "bcryptjs"
-// import jwt from "jsonwebtoken"
-
-// // Register Owner
-// export const registerOwner = async (req, res) => {
-//   const { fullName, email, password } = req.body
-//   try {
-//     const exists = await Owner.findOne({ email })
-//     if (exists) return res.status(400).json({ message: "Email already exists" })
-
-//     const hashedPassword = await bcrypt.hash(password, 10)
-//     const owner = await Owner.create({ fullName, email, password: hashedPassword })
-
-//     const token = jwt.sign({ id: owner._id, role: "owner" }, process.env.JWT_SECRET, { expiresIn: "7d" })
-//     res.json({ user: owner, token })
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
-// }
-
-// // Login Owner/Admin
-// export const login = async (req, res) => {
-//   const { email, password } = req.body
-//   try {
-//     let user = await Owner.findOne({ email })
-//     let role = "owner"
-//     if (!user) {
-//       user = await Admin.findOne({ email })
-//       role = "admin"
-//     }
-//     if (!user) return res.status(400).json({ message: "Invalid credentials" })
-
-//     const isMatch = await bcrypt.compare(password, user.password)
-//     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" })
-
-//     const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET, { expiresIn: "7d" })
-//     res.json({ user, token })
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
-// }
-
-
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { otpStore } from "../middleware/email.config.js";
 
-// Register → automatically role: owner
-export const register = async (req, res) => {
-  const { name, email, password } = req.body;
+
+// after OTP sent
+export const signup = async (req, res) => {
+  res.status(200).json({
+    message: "OTP sent to email. Please verify."
+  });
+};
+
+
+// VERIFY OTP
+export const verifyOtp = async (req, res) => {
   try {
-    const existingUser = await User.findOne({ email });
-    if(existingUser) return res.status(400).json({ message: "User already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { email, otp } = req.body;
 
-    const newUser = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      role: "owner"
+    const cleanEmail = email.trim().toLowerCase();
+
+    const data = otpStore[cleanEmail];
+
+    if (!data) {
+      return res.status(400).json({ message: "OTP not found" });
+    }
+
+    if (data.expires < Date.now()) {
+      delete otpStore[cleanEmail];
+      return res.status(400).json({ message: "OTP expired" });
+    }
+
+    if (data.code !== otp.toString()) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    const user = await User.create({
+      fullName: data.fullName,
+      email: cleanEmail,
+      password: data.passwordHash,
+      isVerified: true
     });
 
-    res.status(201).json({ message: "Owner registered successfully", user: newUser });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    delete otpStore[cleanEmail];
+
+    res.status(201).json({
+      message: "Signup successful",
+      user
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// Login → return role
+
+
+// LOGIN
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email });
-    if(!user) return res.status(400).json({ message: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    const { email, password } = req.body;
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const cleanEmail = email.trim().toLowerCase();
 
-   const userObj = user.toObject();
+    const user = await User.findOne({ email: cleanEmail });
 
-delete userObj.password;
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-// attach token
-userObj.token = token;
+    const match = await bcrypt.compare(password, user.password);
 
-res.json({
-  message: "Login successful",
-  user: userObj,
-});
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    if (!match) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
+
 };
