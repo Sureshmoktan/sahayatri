@@ -34,6 +34,21 @@ const WorkshopSchema = new mongoose.Schema({
     required: true
   },
 
+  // ✅ Automatically taken from the logged-in user — never typed by user
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true
+  },
+
+  // ✅ Reference to which user created this workshop
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+
   createdAt: {
     type: Date,
     default: Date.now
